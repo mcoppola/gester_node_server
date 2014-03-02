@@ -12,10 +12,6 @@ var img = {
 }
 
 exports.index = function(req, res){
-  /*if (!req.params.username) {
-    req.username = 'mcoppola';
-  }*/
-  console.log("req: " + req.params.user);
   res.render('index.html', {
     title: "Home",
     username: req.params.user

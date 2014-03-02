@@ -18,7 +18,7 @@ p,h1,h2,h3,h4{
 	float: right;
 }
 .inline{
-	display: inline-block;
+	display: inline;
 }
 
 h2 {
@@ -26,22 +26,38 @@ h2 {
 	font-size: 150%;
 	position: relative;
 	margin-top: 100px;
-	width: 200px;
+	width: 160px;
 	margin: 0 auto;
 	text-align: center;
+}
+h3 {
+	font-size: 1.0em;
+	color: #330000;
+}
+form input {
+	width: 88%;
+	line-height: 2.5em;
+	box-shadow: none;
 }
 .sub-header{
 	max-width: 60%;
 	margin: 0 auto;
 	font-family: 'Playfair Display SC', serif;
+	padding: 0.5em;
 }
 .footer-fixed{
 	position: fixed;
+	font-size: 1.2em;
 	bottom: 0px;
 	right: 1em;
 	width: auto;
 }
+.footer-fixed:hover{
+	.extend {
+		opacity: 1
+	}
+}
 i{
 	color: #663300;
-	margin-right: 1em;
+	margin: 0 0.5em;
 }

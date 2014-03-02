@@ -3,11 +3,17 @@
 
 {# Home page #}
   {% block content %}
-   <h2>Gester</h2>
+   <h2>~ &nbsp;&nbsp; Gester &nbsp; &nbsp; ~</h2>
    <div class="sub-header">
-     <h3><i class="fa fa-search"></i>search google<div class="inline right"><i class="fa fa-arrow-right"></i></div></h3>
+     <h3><i class="fa fa-search"></i>
+      <form class="inline" action="demo_form.asp">
+        <input type="text" name="search" placeholder="search google">
+        
+        <i class="fa fa-arrow-right"></i>
+      </form> 
+     </h3>
    </div>
    <div class="footer-fixed">
-     <h4>{{username}} &nbsp; &nbsp; &nbsp;<div class="inline right"><i class="fa fa-list"></i><i class="fa fa-cog"></i></div></h4>
+     <h3>{{username}} &nbsp; &nbsp;<div class="inline right"><i class="fa fa-cog"></i></div></h3>
    </div>
   {% endblock %}
