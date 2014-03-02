@@ -1,0 +1,47 @@
+/*font-family: 'Kaushan Script', cursive;
+font-family: 'Playfair Display SC', serif;*/
+
+
+body {
+	background-image: url('/images/floral.jpg');
+}
+p,h1,h2,h3,h4{
+	padding: 1em;
+	background-color: white;
+	box-shadow: 3px 3px rgba(0,0,0,0.4);
+}
+.left{
+	text-align: left;
+}
+.right{
+	text-align: right;
+	float: right;
+}
+.inline{
+	display: inline-block;
+}
+
+h2 {
+	font-family: 'Lancelot', cursive;
+	font-size: 150%;
+	position: relative;
+	margin-top: 100px;
+	width: 200px;
+	margin: 0 auto;
+	text-align: center;
+}
+.sub-header{
+	max-width: 60%;
+	margin: 0 auto;
+	font-family: 'Playfair Display SC', serif;
+}
+.footer-fixed{
+	position: fixed;
+	bottom: 0px;
+	right: 1em;
+	width: 200px;
+}
+i{
+	color: navy;
+	margin-right: 1em;
+}

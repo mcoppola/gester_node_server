@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Gester | {% block title %} {% endblock %}</title>
+	<!-- Meta -->
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<!-- Stylesheets -->
+	<link rel="stylesheet" href="css/style.css" type="text/css" />
+	<link href='http://fonts.googleapis.com/css?family=Playfair+Display+SC|Lancelot' rel='stylesheet' type='text/css'>
+	<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+	<!-- <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" /> -->
+	<!-- javascripts -->
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" type="text/javascript"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js" type="text/javascript"></script>
+</head>
+<body>
+	<div class="main">
+		{# The main content bucket #}
+    {% block content %}
+    {% endblock %}
+	</div>
+</body>
+</html>
