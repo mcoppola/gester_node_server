@@ -1,11 +1,12 @@
 // DEPENDENCIES ----------------------------------------------------------------- //
 
-var express = require('express')
-var http = require('http');
-var path = require('path');
-var routes = require('./routes');
-var nunjucks = require('nunjucks');
-var fs = require('fs');
+var express = require('express'),
+	http = require('http'),
+	path = require('path'),
+	routes = require('./routes'),
+	nunjucks = require('nunjucks'),
+	fs = require('fs'),
+	less = require('less');
 
 var app = express();
 
@@ -17,6 +18,15 @@ var env = new nunjucks.Environment(new nunjucks.FileSystemLoader(__dirname + '/v
 
 env.addFilter('log', function(data) {
   console.log(data);
+});
+
+
+fs.readFile('public/css/style.less',function(error,data){
+    data = data.toString();
+    less.render(data, function (e, css) {
+        fs.writeFile('public/css/style.css', css, function(err){
+        });
+    });
 });
 
 // configure the app
