@@ -3,7 +3,7 @@ font-family: 'Playfair Display SC', serif;*/
 
 
 body {
-	background-image: url('/images/floral.jpg');
+	background-image: url('/images/floral2.jpg');
 }
 p,h1,h2,h3,h4{
 	padding: 1em;
@@ -39,9 +39,9 @@ h2 {
 	position: fixed;
 	bottom: 0px;
 	right: 1em;
-	width: 200px;
+	width: auto;
 }
 i{
-	color: navy;
+	color: #663300;
 	margin-right: 1em;
 }
