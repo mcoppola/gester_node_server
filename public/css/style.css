@@ -1,7 +1,7 @@
 /*font-family: 'Kaushan Script', cursive;
 font-family: 'Playfair Display SC', serif;*/
 body {
-  background-image: url('/images/floral2.jpg');
+  background-color: #333;
 }
 p,
 h1,
@@ -109,7 +109,7 @@ i {
   position: fixed;
   right: 0px;
   bottom: 80px;
-  height: 300px;
+  height: 180px;
   width: 210px;
 }
 .menu-container i {
@@ -124,18 +124,45 @@ i {
 }
 .menu-container .circle {
   position: fixed;
-  bottom: 105px;
+  bottom: 65px;
   right: 169px;
   border-radius: 50%;
   height: 7px;
   width: 7px;
   background-color: #333;
+  opacity: 0;
   -webkit-transform: scale(1);
-  -moz-transition: all 0.5s ease-in-out;
-  -webkit-transition: all 0.5s ease-in-out;
-  -ms-transition: all 0.5s ease-in-out;
-  -o-transition: all 0.5s ease-in-out;
-  transition: all 0.5s ease-in-out;
+  -moz-transition: opacity 0.1s ease-in-out;
+  -webkit-transition: opacity 0.1s ease-in-out;
+  -ms-transition: opacity 0.1s ease-in-out;
+  -o-transition: opacity 0.1s ease-in-out;
+  transition: opacity 0.1s ease-in-out;
+  -moz-transition: -webkit-transform 0.5s ease-in-out;
+  -webkit-transition: -webkit-transform 0.5s ease-in-out;
+  -ms-transition: -webkit-transform 0.5s ease-in-out;
+  -o-transition: -webkit-transform 0.5s ease-in-out;
+  transition: -webkit-transform 0.5s ease-in-out;
+}
+.menu-container .circle-sub {
+  position: fixed;
+  bottom: 65px;
+  right: 169px;
+  border-radius: 50%;
+  height: 7px;
+  width: 7px;
+  background-color: #00FFCC;
+  opacity: 0;
+  -webkit-transform: scale(1);
+  -moz-transition: opacity 0.1s ease-in-out;
+  -webkit-transition: opacity 0.1s ease-in-out;
+  -ms-transition: opacity 0.1s ease-in-out;
+  -o-transition: opacity 0.1s ease-in-out;
+  transition: opacity 0.1s ease-in-out;
+  -moz-transition: -webkit-transform 1.5s ease-in-out;
+  -webkit-transition: -webkit-transform 1.5s ease-in-out;
+  -ms-transition: -webkit-transform 1.5s ease-in-out;
+  -o-transition: -webkit-transform 1.5s ease-in-out;
+  transition: -webkit-transform 1.5s ease-in-out;
 }
 .menu-container .button {
   position: fixed;
@@ -148,11 +175,11 @@ i {
   -ms-transition: background-color 0.2s ease;
   -o-transition: background-color 0.2s ease;
   transition: background-color 0.2s ease;
-  -moz-transition: opacity 0.4s ease;
-  -webkit-transition: opacity 0.4s ease;
-  -ms-transition: opacity 0.4s ease;
-  -o-transition: opacity 0.4s ease;
-  transition: opacity 0.4s ease;
+  -moz-transition: opacity 0.3s ease;
+  -webkit-transition: opacity 0.3s ease;
+  -ms-transition: opacity 0.3s ease;
+  -o-transition: opacity 0.3s ease;
+  transition: opacity 0.3s ease;
 }
 .menu-container .button.base-button:hover {
   background-color: #ffffff;
@@ -160,23 +187,24 @@ i {
 }
 .menu-container .base-button {
   position: fixed;
+  bottom: 40px;
 }
 .menu-container .sub-button {
   visibility: hidden;
   font-size: 1.5em;
-  width: 5em;
+  width: 5.5em;
   background-color: #ffffff;
   opacity: 0;
 }
 .menu-container .sub-button.star {
-  bottom: 232px;
+  bottom: 192px;
   right: 40px;
 }
 .menu-container .sub-button.new {
-  bottom: 186px;
+  bottom: 146px;
   right: 40px;
 }
 .menu-container .sub-button.search {
-  bottom: 140px;
+  bottom: 100px;
   right: 40px;
 }
