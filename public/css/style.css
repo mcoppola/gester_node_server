@@ -115,6 +115,11 @@ i {
 .menu-container i {
   color: #333;
   padding: 0.4em 0.2em;
+  -moz-transition: all 0.2s ease-in-out;
+  -webkit-transition: all 0.2s ease-in-out;
+  -ms-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
 }
 .menu-container .tooltip {
   position: relative;
@@ -153,16 +158,16 @@ i {
   background-color: #00FFCC;
   opacity: 0;
   -webkit-transform: scale(1);
-  -moz-transition: opacity 0.1s ease-in-out;
-  -webkit-transition: opacity 0.1s ease-in-out;
-  -ms-transition: opacity 0.1s ease-in-out;
-  -o-transition: opacity 0.1s ease-in-out;
-  transition: opacity 0.1s ease-in-out;
-  -moz-transition: -webkit-transform 1.5s ease-in-out;
-  -webkit-transition: -webkit-transform 1.5s ease-in-out;
-  -ms-transition: -webkit-transform 1.5s ease-in-out;
-  -o-transition: -webkit-transform 1.5s ease-in-out;
-  transition: -webkit-transform 1.5s ease-in-out;
+  -moz-transition: opacity 0.3s ease-in-out;
+  -webkit-transition: opacity 0.3s ease-in-out;
+  -ms-transition: opacity 0.3s ease-in-out;
+  -o-transition: opacity 0.3s ease-in-out;
+  transition: opacity 0.3s ease-in-out;
+  -moz-transition: -webkit-transform 1s ease-in-out;
+  -webkit-transition: -webkit-transform 1s ease-in-out;
+  -ms-transition: -webkit-transform 1s ease-in-out;
+  -o-transition: -webkit-transform 1s ease-in-out;
+  transition: -webkit-transform 1s ease-in-out;
 }
 .menu-container .button {
   position: fixed;
@@ -207,4 +212,12 @@ i {
 .menu-container .sub-button.search {
   bottom: 100px;
   right: 40px;
+}
+.menu-container .sub-button:hover {
+  opacity: 1;
+  -moz-transition: -webkit-transform 0.01s;
+  -webkit-transition: -webkit-transform 0.01s;
+  -ms-transition: -webkit-transform 0.01s;
+  -o-transition: -webkit-transform 0.01s;
+  transition: -webkit-transform 0.01s;
 }
