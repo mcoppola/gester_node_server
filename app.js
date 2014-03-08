@@ -46,9 +46,10 @@ app.configure( function(){
   app.use(express.errorHandler());
 });
 
-//  routes/index.js is where all the fun happens
+// routes
 app.get('/', routes.index);
-app.get('/:user', routes.index);
+app.get('/home/:user', routes.index);
+app.get('/menu', routes.menu);
 
 // run the server
 var port = 3000;

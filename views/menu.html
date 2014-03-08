@@ -1,0 +1,59 @@
+{% extends 'base_layout.html' %}
+{% block title %} {{title}} {% endblock %}
+
+{# Menu #}
+{% block content %}
+
+<div class="menu-container">
+
+	<div class="button base-button">
+		<i class="fa fa-circle-o fa-2x"><span class="tooltip">MENU</span></i><div class="circle"></div>
+		<div class="button sub-button search">
+			<i class="fa fa-search"><span class="tooltip">SEARCH</span></i>
+		</div>
+		<div class="button sub-button new">
+			<i class="fa fa-plus"><span class="tooltip">NEW TAB</span></i>
+		</div>
+		<div class="button sub-button star">
+			<i class="fa fa-star"><span class="tooltip">FAVORITES</span></i>
+		</div>
+		
+	</div>
+	
+</div>
+
+<script type="text/javascript">
+
+var timer;
+var delay = 500;
+
+$('.base-button').hover(function() {
+	$('.circle').css("-webkit-transform", "scale(2.85)");
+    timer = setTimeout(function() {
+       $('.sub-button').css('visibility', 'visible');
+       $('.sub-button').css('opacity', '.8');
+    }, delay);
+}, function() {
+    clearTimeout(timer);
+});
+
+$('.sub-button').hover(function() {
+	$(this).css('opacity', '1');
+},function() {
+	$(this).css('opacity', '.8');
+});
+
+
+$('.menu-container').mouseleave(function() {
+   $('.circle').css("-webkit-transform", "scale(1)");
+   timer = setTimeout(function() {
+   		$('.sub-button').css('opacity', '0');
+    }, delay);
+   timer = setTimeout(function() {
+   		$('.sub-button').css('visibility', 'hidden');
+    }, delay + 400);
+
+});
+</script>
+
+{% endblock %}
