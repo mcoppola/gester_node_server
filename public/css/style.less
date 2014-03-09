@@ -112,8 +112,8 @@ i{
 .menu-container{
 	position: fixed;
 	right:0px;
-	bottom:80px;
-	height: 180px;
+	bottom:2px;
+	height: 250px;
 	width: 210px;
 	//background-color: rgba(255, 255, 255, 0.3);
 
@@ -132,7 +132,7 @@ i{
 	.circle{
 		//visibility: hidden;
 		position: fixed;
-		bottom: 65px;
+		bottom: 75px;
 		right: 169px;
 		border-radius: 50%;
 		height: 7px;
@@ -147,15 +147,15 @@ i{
 	.circle-sub{
 		//visibility: hidden;
 		position: fixed;
-		bottom: 65px;
-		right: 169px;
+		bottom: 74px;
+		right: 168px;
 		border-radius: 50%;
-		height: 7px;
-		width: 7px;
+		height: 9px;
+		width: 9px;
 		background-color: #00FFCC;
 		opacity: 0;
 		-webkit-transform: scale(1);
-		.transition(opacity .3s ease-in-out);
+		.transition(opacity .5s ease);
 		.transition(-webkit-transform 1s ease-in-out);
 		
 	}
@@ -175,26 +175,42 @@ i{
 	}
 	.base-button{
 		position: fixed;
-		bottom: 40px;
+		bottom: 50px;
 	}
 	.sub-button{
 		visibility: hidden;
 		font-size: 1.5em;
 		width: 5.5em;
 		background-color: rgba(255, 255, 255, 1);
-		opacity: 0;
+		opacity: 0.8;
 	}
 	.sub-button.star{
-		bottom: 192px;
+		bottom: 202px;
 		right: 40px;
 	}
 	.sub-button.new{
-		bottom:146px;
+		bottom:156px;
 		right:40px;
 	}
 	.sub-button.search{
-		bottom: 100px;
+		bottom: 110px;
 		right: 40px;
+	}
+	.sub-button.back{
+		bottom: 2px;
+		right: 110px;
+		width: 2.5em;
+		text-align: center;
+		background-color: rgba(255, 255, 255, 0.1);
+		border: 1px solid rgba(255, 255, 255, 0.2);
+	}
+	.sub-button.forward{
+		text-align: center;
+		bottom: 2px;
+		right: 44px;
+		width: 2.5em;
+		background-color: rgba(255, 255, 255, 0.1);
+		border: 1px solid rgba(255, 255, 255, 0.2);
 	}
 	.sub-button:hover{
 		opacity: 1;

@@ -108,8 +108,8 @@ i {
 .menu-container {
   position: fixed;
   right: 0px;
-  bottom: 80px;
-  height: 180px;
+  bottom: 2px;
+  height: 250px;
   width: 210px;
 }
 .menu-container i {
@@ -129,7 +129,7 @@ i {
 }
 .menu-container .circle {
   position: fixed;
-  bottom: 65px;
+  bottom: 75px;
   right: 169px;
   border-radius: 50%;
   height: 7px;
@@ -150,19 +150,19 @@ i {
 }
 .menu-container .circle-sub {
   position: fixed;
-  bottom: 65px;
-  right: 169px;
+  bottom: 74px;
+  right: 168px;
   border-radius: 50%;
-  height: 7px;
-  width: 7px;
+  height: 9px;
+  width: 9px;
   background-color: #00FFCC;
   opacity: 0;
   -webkit-transform: scale(1);
-  -moz-transition: opacity 0.3s ease-in-out;
-  -webkit-transition: opacity 0.3s ease-in-out;
-  -ms-transition: opacity 0.3s ease-in-out;
-  -o-transition: opacity 0.3s ease-in-out;
-  transition: opacity 0.3s ease-in-out;
+  -moz-transition: opacity 0.5s ease;
+  -webkit-transition: opacity 0.5s ease;
+  -ms-transition: opacity 0.5s ease;
+  -o-transition: opacity 0.5s ease;
+  transition: opacity 0.5s ease;
   -moz-transition: -webkit-transform 1s ease-in-out;
   -webkit-transition: -webkit-transform 1s ease-in-out;
   -ms-transition: -webkit-transform 1s ease-in-out;
@@ -192,26 +192,42 @@ i {
 }
 .menu-container .base-button {
   position: fixed;
-  bottom: 40px;
+  bottom: 50px;
 }
 .menu-container .sub-button {
   visibility: hidden;
   font-size: 1.5em;
   width: 5.5em;
   background-color: #ffffff;
-  opacity: 0;
+  opacity: 0.8;
 }
 .menu-container .sub-button.star {
-  bottom: 192px;
+  bottom: 202px;
   right: 40px;
 }
 .menu-container .sub-button.new {
-  bottom: 146px;
+  bottom: 156px;
   right: 40px;
 }
 .menu-container .sub-button.search {
-  bottom: 100px;
+  bottom: 110px;
   right: 40px;
+}
+.menu-container .sub-button.back {
+  bottom: 2px;
+  right: 110px;
+  width: 2.5em;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+.menu-container .sub-button.forward {
+  text-align: center;
+  bottom: 2px;
+  right: 44px;
+  width: 2.5em;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 .menu-container .sub-button:hover {
   opacity: 1;
