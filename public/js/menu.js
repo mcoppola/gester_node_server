@@ -23,7 +23,6 @@ $( document ).ready(function() {
     $(this).css('opacity', '.8');
   });
 
-
   $('.menu-container').mouseleave(function() {
      $('.circle').css("-webkit-transform", "scale(1)");
      timer = setTimeout(function() {
@@ -35,12 +34,23 @@ $( document ).ready(function() {
         $('.sub-button').css('opacity', '0.8');
       }, delay + 100);
   });
+  $('.sub-button.cog').hover(function() {
+    $(this).find('.circle-sub').css("opacity", "1");
+    $(this).find('.circle-sub').css("-webkit-transform", "scale(2.3)");
+    timer = setTimeout(function() {
+      //document.location.href = 'https://www.google.com';
+    }, delay + 700);
+  }, function() {
+    clearTimeout(timer);
+    $(this).find('.circle-sub').css("-webkit-transform", "scale(1)");
+    $(this).find('.circle-sub').css("opacity", "0");
+  });
 
   $('.sub-button.search').hover(function() {
     $(this).find('.circle-sub').css("opacity", "1");
     $(this).find('.circle-sub').css("-webkit-transform", "scale(2.3)");
   	timer = setTimeout(function() {
-  		document.location.href = 'https://www.google.com';
+  		//document.location.href = 'https://www.google.com';
   	}, delay + 700);
   }, function() {
   	clearTimeout(timer);

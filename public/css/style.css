@@ -1,7 +1,7 @@
 /*font-family: 'Kaushan Script', cursive;
 font-family: 'Playfair Display SC', serif;*/
 body {
-  background-color: #333;
+  background-color: transparent;
 }
 p,
 h1,
@@ -109,7 +109,7 @@ i {
   position: fixed;
   right: 0px;
   bottom: 2px;
-  height: 250px;
+  height: 290px;
   width: 210px;
 }
 .menu-container i {
@@ -200,6 +200,10 @@ i {
   width: 5.5em;
   background-color: #ffffff;
   opacity: 0.8;
+}
+.menu-container .sub-button.cog {
+  bottom: 248px;
+  right: 40px;
 }
 .menu-container .sub-button.star {
   bottom: 202px;
