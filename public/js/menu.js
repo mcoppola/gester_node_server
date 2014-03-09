@@ -13,6 +13,7 @@ $( document ).ready(function() {
       clearTimeout(timer);
   });
 
+  
   $('.sub-button').hover(function() {
   	$(this).css('opacity', '1');
   	$(this).find('i').css('color', '#00FFCC');
@@ -37,7 +38,7 @@ $( document ).ready(function() {
   $('.sub-button.cog').hover(function() {
     $(this).find('.circle-sub').css("opacity", "1");
     $(this).find('.circle-sub').css("-webkit-transform", "scale(2.3)");
-    timer = setTimeout(function() {
+    timer = setTimeout(function() { 
       //document.location.href = 'https://www.google.com';
     }, delay + 700);
   }, function() {

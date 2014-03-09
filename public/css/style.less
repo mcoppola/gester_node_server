@@ -13,7 +13,7 @@ font-family: 'Playfair Display SC', serif;*/
 
 body {
 	//background-image: url('/images/floral2.jpg');
-	background-color: transparent;
+	background-color: #333;
 }
 p,h1,h2,h3,h4{
 	padding: 1em;
@@ -133,7 +133,7 @@ i{
 		//visibility: hidden;
 		position: fixed;
 		bottom: 75px;
-		right: 169px;
+		right: 136px;
 		border-radius: 50%;
 		height: 7px;
 		width: 7px;
@@ -148,7 +148,7 @@ i{
 		//visibility: hidden;
 		position: fixed;
 		bottom: 74px;
-		right: 168px;
+		right: 136px;
 		border-radius: 50%;
 		height: 9px;
 		width: 9px;
@@ -162,9 +162,10 @@ i{
 	.button{
 		position: fixed;
 		bottom: 80px;
-		right: 80px;
+		right: 36px;
+		width: 140px;
 		background-color: rgba(255, 255, 255, 0.8);
-		border-radius: 10px;
+		//border-radius: 10px;
 		.transition(background-color .2s ease);
 		.transition(opacity .3s ease);
 		
@@ -172,10 +173,12 @@ i{
 	.button.base-button:hover{
 		background-color: rgb(255, 255, 255, 1);
 		opacity: 1;
-	}
+	}	
 	.base-button{
 		position: fixed;
 		bottom: 50px;
+		//box-shadow: 2px 2px rgba(0, 0, 0, 0.5);
+
 	}
 	.sub-button{
 		visibility: hidden;
@@ -202,8 +205,8 @@ i{
 	}
 	.sub-button.back{
 		bottom: 2px;
-		right: 110px;
-		width: 2.5em;
+		right: 108px;
+		width: 63px;
 		text-align: center;
 		background-color: rgba(255, 255, 255, 0.1);
 		border: 1px solid rgba(255, 255, 255, 0.2);
@@ -211,8 +214,8 @@ i{
 	.sub-button.forward{
 		text-align: center;
 		bottom: 2px;
-		right: 44px;
-		width: 2.5em;
+		right: 40px;
+		width: 64px;
 		background-color: rgba(255, 255, 255, 0.1);
 		border: 1px solid rgba(255, 255, 255, 0.2);
 	}
