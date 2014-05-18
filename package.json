@@ -8,7 +8,8 @@
     "less-middleware": "*",
     "nunjucks": "*",
     "node-flickr": "0.0.1",
-    "underscore": "~1.6.0"
+    "underscore": "~1.6.0",
+    "zerorpc": "*"
   },
   "devDependencies": {
     "less": "~1.7.0"

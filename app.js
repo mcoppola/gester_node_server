@@ -6,7 +6,8 @@ var express = require('express'),
 	routes = require('./routes'),
 	nunjucks = require('nunjucks'),
 	fs = require('fs'),
-	less = require('less');
+	less = require('less'),
+  browser = require('./lib/browser/index.js');
 
 var app = express();
 
@@ -21,13 +22,13 @@ env.addFilter('log', function(data) {
 });
 
 
-fs.readFile('public/css/style.less',function(error,data){
+/*fs.readFile('public/css/style.less',function(error,data){
     data = data.toString();
     less.render(data, function (e, css) {
         fs.writeFile('public/css/style.css', css, function(err){
         });
     });
-});
+});*/
 
 // configure the app
 app.configure( function(){
@@ -38,8 +39,8 @@ app.configure( function(){
   app.use(express.bodyParser());
   app.use(express.methodOverride());
   app.use(app.router);
-  app.use(require('less-middleware')({ src: __dirname + '/public' }));
-  app.use(express.static(path.join(__dirname, 'public')));
+  app.use(require('less-middleware')(__dirname + '/public'));
+  app.use(express.static(path.join(__dirname, '/public')));
   app.use(function(req, res, next){
     return res.redirect('/');
   });
@@ -50,6 +51,12 @@ app.configure( function(){
 app.get('/', routes.index);
 app.get('/home/:user', routes.index);
 app.get('/menu', routes.menu);
+app.get('/tabs', routes.tabs);
+app.get('/tabs/:count', routes.tabs);
+
+// Start browser
+browser.start();
+
 
 // run the server
 var port = 3000;

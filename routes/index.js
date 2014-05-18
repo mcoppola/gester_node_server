@@ -19,3 +19,9 @@ exports.menu = function(req, res){
     title: "Menu"
   });
 };
+exports.tabs = function(req, res){
+  res.render('tabs.html', {
+    title: "Tabs",
+    tabs: req.params.count
+  });
+};
