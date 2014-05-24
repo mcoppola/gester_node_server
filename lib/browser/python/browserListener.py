@@ -11,7 +11,7 @@ class Browser(object):
 
 	# We are going to start with 2 windows
 	# One for the UI and One for browsing
-	def init():
+	def init(self):
 		transparent_window_style_provider = gtk.CssProvider()
 		winA = gtk.Window()
 		winA.fullscreen()
@@ -38,8 +38,9 @@ class Browser(object):
 		winB.add(webB)
 		winB.show_all()
 		gtk.main()
+		return "Browser: init done"
 
-	def newTab():
+	def newTab(self):
 		win = gtk.Window()
 		win.fullscreen()
 		win.connect('destroy', lambda w: gtk.main_quit())
