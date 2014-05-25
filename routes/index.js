@@ -1,5 +1,6 @@
 
 var _ = require('underscore');
+var browser = require('../lib/browser/index.js');
 //var nav = require('../routes/navigation.js');
 
 var img = {
@@ -25,3 +26,7 @@ exports.tabs = function(req, res){
     tabs: req.params.count
   });
 };
+exports.api = function(req, res){
+
+
+}

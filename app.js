@@ -47,15 +47,17 @@ app.configure( function(){
   app.use(express.errorHandler());
 });
 
-// routes
+// routs
 app.get('/', routes.index);
 app.get('/home/:user', routes.index);
 app.get('/menu', routes.menu);
 app.get('/tabs', routes.tabs);
 app.get('/tabs/:count', routes.tabs);
 
-// Start browser
-browser.start();
+// browser api
+app.get('/tabs/:count', routes.tabs);
+
+
 
 
 // run the server
@@ -76,3 +78,6 @@ if (process.env.PORT) {
 http.createServer(app).listen(port, '127.0.0.1', function() {
   console.log("Express server listening on %s:%d in %s mode", '127.0.0.1', port, app.settings.env);
 });
+
+// Start browser
+browser.start();
