@@ -1,29 +1,7 @@
 #!/usr/bin/env python
-
-# Listener for browser commands
-
 import webkit, gtk, glib, gobject, threading, os, zerorpc
 
 #gobject.threads_init()
-
-# class GtkThread(threading.Thread):
-
-# 	def __init__(self):
-# 		threading.Thread.__init__(self)
-
-# 	def run(self):
-# 		gtk.threads_enter()
-# 		gtk.main()
-# 		gtk.threads_leave()
-
-# 	def update(self): 
-# 		gtk.threads_enter()
-# 		gtk.main()
-# 		gtk.threads_leave()
-
-# gtk.gdk.threads_init()
-# g = GtkThread();
-# g.start()
 
 class WebView(webkit.WebView):
 	def get_html(self):
@@ -38,79 +16,79 @@ class WebView(webkit.WebView):
 
 class Tab(threading.Thread):
 
-	def __init__(self, title="0", url=""):
+	def delete_event(self, widget, event, data=None):
+		return False
+
+	def __init__(self, title, url, makeToolbar=False):
 		threading.Thread.__init__(self)
-		self.win = gtk.Window()
-		#self.win.fullscreen()
+		self.win = gtk.Window(gtk.WINDOW_TOPLEVEL)
+		self.win.set_resizable(True)
+		self.win.connect("delete_event", self.delete_event)
 		self.win.connect('destroy', lambda w: gtk.main_quit())
 		self.win.set_title(title)
+		#self.win.fullscreen()
 
 		self.web = webkit.WebView()
 		self.web.load_uri(url)
 
-		self.win.add(self.web)
+		if (makeToolbar):
+			self.addToolbar()
+		else:
+			self.win.add(self.web)
 		self.win.show_all()
 
-	# def run(self):
-	# 	gtk.threads_enter()
-	# 	gtk.main()
-	# 	gtk.threads_leave()
-
-
 	def addToolbar(self):
-		toolbar = gtk.Toolbar()
+		self.toolbar = gtk.Toolbar()
 
 		self.back_button = gtk.ToolButton(gtk.STOCK_GO_BACK)
 		self.back_button.connect("clicked", self.go_back)
 		self.forward_button = gtk.ToolButton(gtk.STOCK_GO_FORWARD)
 		self.forward_button.connect("clicked", self.go_forward)
-
 		self.refresh_button = gtk.ToolButton(gtk.STOCK_REFRESH)
 		self.refresh_button.connect("clicked", self.refresh)
 
-		toolbar.add(self.back_button)
-		toolbar.add(self.forward_button)
-		toolbar.add(self.refresh_button)
+		self.toolbar.add(self.back_button)
+		self.toolbar.add(self.forward_button)
+		self.toolbar.add(self.refresh_button)
 
-		#entry bar for typing in and display URLs, when they type in a site
-		#and hit enter the on_active function is called
 		self.url_bar = gtk.Entry()
 		self.url_bar.connect("activate", self.on_active)
 
-		#anytime a site is loaded the update_buttons will be called
 		self.web.connect("load_committed", self.update_buttons)
 
-	def on_active(self, tab, widge, data=None):
+		self.scroll_window = gtk.ScrolledWindow(None, None)
+		self.scroll_window.add(self.web)
+
+		self.vbox = gtk.VBox(False, 0)
+		self.vbox.pack_start(self.toolbar, False, True, 0)
+		self.vbox.pack_start(self.url_bar, False, True, 0)
+		self.vbox.add(self.scroll_window)
+
+		self.win.add(self.vbox)
+		self.win.set_default_size(1060, 800)
+
+	def on_active(self, widge, data=None):
 		url = self.url_bar.get_text()
 		try:
 			url.index("://")
 		except:
 			url = "http://"+url
 		self.url_bar.set_text(url)
-		self.web.open(url)
+		self.web.load_uri(url)
 
-	def go_back(self, vi, widget, data=None):
-		'''Webkit will remember the links and this will allow us to go
-		   backwards.'''
+	def go_back(self, widget, data=None):	
 		self.web.go_back()
 
-	def go_forward(self, tab, widget, data=None):
-		'''Webkit will remember the links and this will allow us to go
-		   forwards.'''
+	def go_forward(self, widget, data=None):
 		self.web.go_forward()
 
-	def refresh(self, tab, widget, data=None):
-		'''Simple makes webkit reload the current back.'''
+	def refresh(self, widget, data=None):
 		self.web.reload()
 
-	def update_buttons(self, tab, widget, data=None):
-		'''Gets the current url entry and puts that into the url bar.
-		   It then checks to see if we can go back, if we can it makes the
-		   back button clickable.  Then it does the same for the foward
-		   button.'''
+	def update_buttons(self, widget, data=None):
 		self.url_bar.set_text( widget.get_main_frame().get_uri() )
-		self.back_button.set_sensitive(self.web_view.can_go_back())
-		self.forward_button.set_sensitive(self.web_view.can_go_forward())
+		self.back_button.set_sensitive(self.web.can_go_back())
+		self.forward_button.set_sensitive(self.web.can_go_forward())
 
 
 # BROWSER - interface for node
@@ -120,20 +98,25 @@ class Browser(object):
 		global tabs, currentTab
 		if (url == None):
 			url = "http://google.com"
+
 		gtk.threads_enter()
-		tab = Tab("1", url)
+		tab = Tab(str(len(tabs)), url, True)
 		gtk.threads_leave()
 		tabs.append(tab)
-		currentTab = len(tabs)
+		currentTab = len(tabs) - 1
 		return "PY BROWSER: New Tab done"
 
-	def changeTab(self, tab):
-		return "done"
-
-	def google(self):
+	def switchTab(self, d):
 		global tabs, currentTab
-		tabs[currentTab].web.load_uri("https://google.com")
-		return "PY BROWSER: google done"
+		if (currentTab < 1):
+			if (d < 0):
+				return "PY BROWSER: Can't go back tab"
+		if (currentTab >= (len(tabs))):
+			if (d > 0):
+				return "PY BROWSER: Can't go forward tab"
+		currentTab = currentTab + int(d)
+		tabs[currentTab].win.present()
+		return "PY BROWSER: Change Tab done"
 
 	def go(self, url):
 		global tabs, currentTab
@@ -166,8 +149,7 @@ gtk.gdk.threads_init()
 def initWindows():
 	global tabs, currentTab
 	# Browser tab
-	tab = Tab("0", "http://google.com")
-	tab.addToolbar()
+	tab = Tab("0", "http://google.com", True)
 	tabs.append(tab)
 
 	# UI Window

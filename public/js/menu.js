@@ -82,8 +82,8 @@ $( document ).ready(function() {
         url: "/api",
         dataType: "json",
         data: {
-            go: true,
-            url: "http://vintageking.com"
+            newTab: true,
+            url: "http://google.com"
         },
         success: function(res) {
           console.log(res);
@@ -91,6 +91,50 @@ $( document ).ready(function() {
     });
   });
 
+  // Search Listener
+  $('#button-search').click(function() {
+    $.ajax({
+        url: "/api",
+        dataType: "json",
+        data: {
+            go: true,
+            url: "http://yahoo.com"
+        },
+        success: function(res) {
+          console.log(res);
+        }
+    });
+  });
+
+  // Back Listener
+  $('#button-back').click(function() {
+    $.ajax({
+        url: "/api",
+        dataType: "json",
+        data: {
+            switchTab: true,
+            delta: -1
+        },
+        success: function(res) {
+          console.log(res);
+        }
+    });
+  });
+
+  // Forward Listener
+  $('#button-forward').click(function() {
+    $.ajax({
+        url: "/api",
+        dataType: "json",
+        data: {
+            switchTab: true,
+            delta: 1
+        },
+        success: function(res) {
+          console.log(res);
+        }
+    });
+  });
 }); // end document.ready
 
 function OpenInNewTab(url)

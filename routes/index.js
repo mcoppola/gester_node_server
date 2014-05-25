@@ -37,13 +37,16 @@ exports.api = function(req, res){
     
   }
   if (req.query.go) {
-    console.log("req.jquery.go");
     if (req.query.url){
-      console.log("req.jquery.url");
       browser.go(req.query.url);
     } else {
       browser.go();
     }
+  }
+  if (req.query.switchTab) {
+    if (req.query.delta) {
+      browser.switchTab(req.query.delta);
+    } 
   }
   res.json({done: true});
 
