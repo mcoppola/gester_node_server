@@ -14,6 +14,8 @@ sudo apt-get install libevent
 # If you don't already have pip installed:
 sudo apt-get install python-setuptools
 sudo apt-get install python-pip
+sudo apt-get install python-dev
+sudo apt-get install libevent-dev
 sudo pip install pyzmq
 
 # Now we can install ZeroRPC
@@ -21,7 +23,7 @@ sudo pip install zerorpc
 
 # Node.js dependencies
 
-# Just install the ZeroRPC node module
+# ZeroRPC node module
 sudo npm install -g zerorpc
 
 # Python webkit

@@ -2,7 +2,28 @@
 
 # Listener for browser commands
 
-import webkit, gtk, os, zerorpc
+import webkit, gtk, glib, gobject, threading, os, zerorpc
+
+#gobject.threads_init()
+
+# class GtkThread(threading.Thread):
+
+# 	def __init__(self):
+# 		threading.Thread.__init__(self)
+
+# 	def run(self):
+# 		gtk.threads_enter()
+# 		gtk.main()
+# 		gtk.threads_leave()
+
+# 	def update(self): 
+# 		gtk.threads_enter()
+# 		gtk.main()
+# 		gtk.threads_leave()
+
+# gtk.gdk.threads_init()
+# g = GtkThread();
+# g.start()
 
 class WebView(webkit.WebView):
 	def get_html(self):
@@ -15,10 +36,10 @@ class WebView(webkit.WebView):
 		js = 'alart("a");'
 		b.execute_script(js)
 
-class Tab(object):
-
+class Tab(threading.Thread):
 
 	def __init__(self, title="0", url=""):
+		threading.Thread.__init__(self)
 		self.win = gtk.Window()
 		#self.win.fullscreen()
 		self.win.connect('destroy', lambda w: gtk.main_quit())
@@ -29,6 +50,11 @@ class Tab(object):
 
 		self.win.add(self.web)
 		self.win.show_all()
+
+	# def run(self):
+	# 	gtk.threads_enter()
+	# 	gtk.main()
+	# 	gtk.threads_leave()
 
 
 	def addToolbar(self):
@@ -87,61 +113,76 @@ class Tab(object):
 		self.forward_button.set_sensitive(self.web_view.can_go_forward())
 
 
-# BROWSER - communicates with node
-
+# BROWSER - interface for node
 class Browser(object):
 
-	tabs = [];
-	currentTab = 0;
-
-	# We are going to start with 2 windows
-	# One for the UI and One for browsing
-	def init(self):
-		#transparent_window_style_provider = gtk.CssProvider()
-
-		tabA = Tab("1", "https://www.google.com")
-		#tabB = Tab("2", "https://google.com")
-		#tabC = Tab("2", "https://google.com")
-
-		#tabA.addToolbar()
-		self.tabs.append(tabA)
-		#self.tabs.append(tabB)
-		#self.tabs.append(tabB)
-
-		uiWin = Tab("0", "http://127.0.0.1:3000/menu")
-		uiWin.web.set_transparent(1)
-		#webB.open("file:///home/ubuntu/gester/static/menu.html")
-
-		#scroll_window = gtk.ScrolledWindow(None, None)
-		#scroll_window.add(webA)
-		
-		gtk.main()
-		return "Browser: init done"
-
-	def newTab(self, url=""):
-		gtk.main_quit()
-		tab = Tab(str(len(self.tabs)), url)
-		self.tabs.append(tab)
-		gtk.main()
-		return "New Tab done"
+	def newTab(self, url):
+		global tabs, currentTab
+		if (url == None):
+			url = "http://google.com"
+		gtk.threads_enter()
+		tab = Tab("1", url)
+		gtk.threads_leave()
+		tabs.append(tab)
+		currentTab = len(tabs)
+		return "PY BROWSER: New Tab done"
 
 	def changeTab(self, tab):
 		return "done"
 
 	def google(self):
-		self.tabs[self.currentTab].web.load_uri("https://google.com")
-		return "done"
+		global tabs, currentTab
+		tabs[currentTab].web.load_uri("https://google.com")
+		return "PY BROWSER: google done"
 
-	def go(self, url="http://nytimes.com"):
-		self.tabs[self.currentTab].web.open(url)
-		return "done"
+	def go(self, url):
+		global tabs, currentTab
+		if (url == None):
+			url = "http://espn.go.com"
+		tabs[currentTab].web.load_uri(url)
+		return "PY BROWSER: Go done"
+
+# BROWSER COM - communicates with node
+class BrowserCom(threading.Thread):
+
+	def __init__(self):
+		threading.Thread.__init__(self)
+	
+	def run(self):
+		s = zerorpc.Server(Browser())
+		s.bind("tcp://0.0.0.0:4242")
+		s.run()
 
 
+########################################
+## ---- MAIN THREAD ----------------- ## 
+########################################
+
+tabs = []
+currentTab = 0
+
+gtk.gdk.threads_init()
+
+def initWindows():
+	global tabs, currentTab
+	# Browser tab
+	tab = Tab("0", "http://google.com")
+	tab.addToolbar()
+	tabs.append(tab)
+
+	# UI Window
+	ui = Tab("ui", 'http://127.0.0.1:3000/menu')
 
 
+# Initiate starting windows
+initWindows()
 
+# Browser to node communication thread
+b = BrowserCom()
+b.start()
 
-# Open port for communitcation with node
-s = zerorpc.Server(Browser())
-s.bind("tcp://0.0.0.0:4242")
-s.run()
+# Gtk thread
+gtk.threads_enter()
+gtk.main()
+gtk.threads_leave()
+

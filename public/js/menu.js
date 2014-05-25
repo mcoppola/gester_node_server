@@ -82,7 +82,8 @@ $( document ).ready(function() {
         url: "/api",
         dataType: "json",
         data: {
-            newTab: true
+            go: true,
+            url: "http://vintageking.com"
         },
         success: function(res) {
           console.log(res);

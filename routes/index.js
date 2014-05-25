@@ -27,18 +27,20 @@ exports.tabs = function(req, res){
   });
 };
 exports.api = function(req, res){
-  if(req.params.newtab = true) {
-    if (req.params.url){
-      browser.newTab(req.params.url);
+  console.log(req.query);
+  if (req.query.newTab) {
+    if (req.query.url){
+      browser.newTab(req.query.url);
     } else {
       browser.newTab();
     }
     
   }
-  if(req.params.go = true) {
-    console.log("req.params.go");
-    if (req.params.url){
-      browser.go(req.params.url);
+  if (req.query.go) {
+    console.log("req.jquery.go");
+    if (req.query.url){
+      console.log("req.jquery.url");
+      browser.go(req.query.url);
     } else {
       browser.go();
     }
