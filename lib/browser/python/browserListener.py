@@ -115,14 +115,18 @@ class Browser(object):
 			if (d > 0):
 				return "PY BROWSER: Can't go forward tab"
 		currentTab = currentTab + int(d)
+		gtk.threads_enter()
 		tabs[currentTab].win.present()
+		gtk.threads_leave()
 		return "PY BROWSER: Change Tab done"
 
 	def go(self, url):
 		global tabs, currentTab
 		if (url == None):
 			url = "http://espn.go.com"
+		gtk.threads_enter()
 		tabs[currentTab].web.load_uri(url)
+		gtk.threads_leave()
 		return "PY BROWSER: Go done"
 
 # BROWSER COM - communicates with node
@@ -154,6 +158,19 @@ def initWindows():
 
 	# UI Window
 	ui = Tab("ui", 'http://127.0.0.1:3000/menu')
+	ui.win.set_name('ui-win')
+	style_provider = gtk.CssProvider()
+
+	css = open('./public/css/uiWindow.css', 'rb')
+	css_data = css.read()
+	css.close()
+
+	style_provider.load_from_data(css_data)
+
+	Gtk.StyleContext.add_provider_for_screen(
+	    Gdk.Screen.get_default(), style_provider,     
+	    Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
+	)
 
 
 # Initiate starting windows
