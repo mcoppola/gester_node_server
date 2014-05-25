@@ -3,8 +3,7 @@
 
 {# Home page #}
   {% block content %}
-   <h2>~ &nbsp;&nbsp; Gester &nbsp; &nbsp; ~</h2>
-   <div class="sub-header">
+<!--    <div class="sub-header">
      <h3><i class="fa fa-search"></i>
       <form class="inline" action="demo_form.asp">
         <input type="text" name="search" placeholder="search google">
@@ -12,15 +11,19 @@
         <i class="fa fa-arrow-right"></i>
       </form> 
      </h3>
-   </div>
+   </div> -->
 <div class="inner-80">
 <div class="item-container"></div>
-   <div class="item">
-    <i class="fa fa-youtube fa-4x"></i>
-   </div>
-   <div class="item">
-    <i class="fa fa-facebook-square fa-4x"></i>
-   </div>
+   <a href="http://youtube.com">
+     <div class="item">
+      <i class="fa fa-youtube fa-4x"></i>
+     </div>
+   </a>
+   <a href="http://facebook.com">
+     <div class="item">
+      <i class="fa fa-facebook-square fa-4x"></i>
+     </div>
+    </a>
    <div class="item">
     <i class="fa fa-github fa-4x"></i>
    </div>
@@ -39,7 +42,7 @@
 </div>
 </div>
 
-<div class="menu-container">
+<!-- <div class="menu-container">
 
   <div class="button base-button">
     <i class="fa fa-circle-o fa-2x"><span class="tooltip">MENU</span></i><div class="circle"></div><div class="circle-sub"></div>
@@ -54,6 +57,6 @@
     </div>
   </div>
   
-</div>
+</div> -->
 
   {% endblock %}

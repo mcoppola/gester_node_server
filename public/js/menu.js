@@ -135,6 +135,20 @@ $( document ).ready(function() {
         }
     });
   });
+
+  // Home Listener
+  $('#button-home').click(function() {
+    $.ajax({
+        url: "/api",
+        dataType: "json",
+        data: {
+            home: true
+        },
+        success: function(res) {
+          console.log(res);
+        }
+    });
+  });
 }); // end document.ready
 
 function OpenInNewTab(url)

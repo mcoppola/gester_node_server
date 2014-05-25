@@ -48,6 +48,9 @@ exports.api = function(req, res){
       browser.switchTab(req.query.delta);
     } 
   }
+  if (req.query.home) {
+    browser.go("http://127.0.0.1:3000/")
+  }
   res.json({done: true});
 
 }
