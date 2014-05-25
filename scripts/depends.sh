@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# Simple script for installing ZeroRPC on Ubuntu 12.04 LTS
-
 # System dependencies
 
 # First install ZeroMQ
@@ -25,3 +23,7 @@ sudo pip install zerorpc
 
 # Just install the ZeroRPC node module
 sudo npm install -g zerorpc
+
+# Python webkit
+sudo pip install python-gtk2
+sudo pip install python-webkit

@@ -27,6 +27,22 @@ exports.tabs = function(req, res){
   });
 };
 exports.api = function(req, res){
-
+  if(req.params.newtab = true) {
+    if (req.params.url){
+      browser.newTab(req.params.url);
+    } else {
+      browser.newTab();
+    }
+    
+  }
+  if(req.params.go = true) {
+    console.log("req.params.go");
+    if (req.params.url){
+      browser.go(req.params.url);
+    } else {
+      browser.go();
+    }
+  }
+  res.json({done: true});
 
 }

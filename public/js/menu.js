@@ -73,6 +73,23 @@ $( document ).ready(function() {
     $(this).find('.circle-sub').css("-webkit-transform", "scale(1)").css("opacity", "0");
   });
 
+
+
+
+  // New Tab Listener
+  $('#button-newTab').click(function() {
+    $.ajax({
+        url: "/api",
+        dataType: "json",
+        data: {
+            newTab: true
+        },
+        success: function(res) {
+          console.log(res);
+        }
+    });
+  });
+
 }); // end document.ready
 
 function OpenInNewTab(url)
@@ -80,3 +97,4 @@ function OpenInNewTab(url)
   var win=window.open(url, '_blank');
   win.focus();
 }
+

@@ -55,9 +55,7 @@ app.get('/tabs', routes.tabs);
 app.get('/tabs/:count', routes.tabs);
 
 // browser api
-app.get('/tabs/:count', routes.tabs);
-
-
+app.get('/api', routes.api);
 
 
 // run the server

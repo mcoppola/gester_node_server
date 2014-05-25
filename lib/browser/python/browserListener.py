@@ -10,6 +10,7 @@ class WebView(webkit.WebView):
 		html = self.get_main_frame().get_title()
 		self.execute_script('document.title=oldtitle')
 		return html
+
 	def load_finished(web):
 		js = 'alart("a");'
 		b.execute_script(js)
@@ -98,12 +99,17 @@ class Browser(object):
 	def init(self):
 		#transparent_window_style_provider = gtk.CssProvider()
 
-		mainTab = Tab("1", "https://www.google.com")
-		mainTab.addToolbar()
-		self.tabs.append(mainTab)
-		print 'winA'
+		tabA = Tab("1", "https://www.google.com")
+		#tabB = Tab("2", "https://google.com")
+		#tabC = Tab("2", "https://google.com")
 
-		uiWin = Tab("0", "127.0.0.1:3000/menu")
+		#tabA.addToolbar()
+		self.tabs.append(tabA)
+		#self.tabs.append(tabB)
+		#self.tabs.append(tabB)
+
+		uiWin = Tab("0", "http://127.0.0.1:3000/menu")
+		uiWin.web.set_transparent(1)
 		#webB.open("file:///home/ubuntu/gester/static/menu.html")
 
 		#scroll_window = gtk.ScrolledWindow(None, None)
@@ -112,12 +118,23 @@ class Browser(object):
 		gtk.main()
 		return "Browser: init done"
 
-
-
 	def newTab(self, url=""):
+		gtk.main_quit()
 		tab = Tab(str(len(self.tabs)), url)
 		self.tabs.append(tab)
+		gtk.main()
 		return "New Tab done"
+
+	def changeTab(self, tab):
+		return "done"
+
+	def google(self):
+		self.tabs[self.currentTab].web.load_uri("https://google.com")
+		return "done"
+
+	def go(self, url="http://nytimes.com"):
+		self.tabs[self.currentTab].web.open(url)
+		return "done"
 
 
 
