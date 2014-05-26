@@ -73,7 +73,20 @@ if (process.env.PORT) {
   }
 }
 
-http.createServer(app).listen(port, '127.0.0.1', function() {
+
+
+var server = http.createServer(app);
+var shutdown = function () {
+  console.log("Shutdown");
+  browser.quit();
+  server.close();
+}
+
+process.on('SIGTERM', shutdown);
+process.on ('SIGINT', shutdown);
+
+// Start server
+server.listen(port, '127.0.0.1', function() {
   console.log("Express server listening on %s:%d in %s mode", '127.0.0.1', port, app.settings.env);
 });
 

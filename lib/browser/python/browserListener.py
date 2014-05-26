@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-import webkit, gtk, glib, gobject, threading, os, sys, zerorpc
+import webkit, gtk, glib, threading, Queue, os, sys, zerorpc
 
 #gobject.threads_init()
 
@@ -24,7 +24,7 @@ class Tab(threading.Thread):
 		self.win = gtk.Window(gtk.WINDOW_TOPLEVEL)
 		self.win.set_resizable(True)
 		self.win.connect("delete_event", self.delete_event)
-		self.win.connect('destroy', lambda w: gtk.main_quit())
+		#self.win.connect('destroy', lambda w: gtk.main_quit())
 		self.win.set_title(title)
 		
 		if (fullscreen):
@@ -103,7 +103,12 @@ class Browser(object):
 		if (url == None):
 			url = "http://google.com"
 		gtk.threads_enter()
-		tab = Tab(str(len(tabs)), url, True, True)
+		try:
+			tab = Tab(str(len(tabs)), url, True, True)
+		except (KeyboardInterrupt, SystemExit):
+			cleanup_stop_thread();
+			sys.exit()
+		#tab = Tab(str(len(tabs)), url, True, True)
 		tabs.append(tab)
 		currentTab = len(tabs) - 1
 		tabs[currentTab].web.grab_focus()
@@ -145,6 +150,14 @@ class Browser(object):
 		gtk.threads_leave()
 		return "PY BROWSER: Go done"
 
+	def quit(self):
+		global tabs
+		# for tab in tabs:
+		# 	loadQueue(lambda: tab.win.destroy())
+		loadQueue(lambda: gtk.main_quit())
+		loadQueue(lambda: gsys.exit())
+		return "PY BROWSER: quit done"
+
 # BROWSER COM - communicates with node
 class BrowserCom(threading.Thread):
 
@@ -161,10 +174,23 @@ class BrowserCom(threading.Thread):
 ## ---- MAIN THREAD ----------------- ## 
 ########################################
 
+#glib.thread_init()
+gtk.gdk.threads_init()
+
 tabs = []
 currentTab = 0
+callbackQueue = Queue.Queue()
 
-gtk.gdk.threads_init()
+def loadQueue(function):
+	callbackQueue.put(function)
+
+def readQueue():
+	while True:
+		try:
+			callback = callbackQueue.get(False)
+		except Queue.Empty:
+			break
+		callback()
 
 def initWindows():
 	global tabs, currentTab
@@ -201,5 +227,9 @@ b.start()
 # Gtk thread
 gtk.threads_enter()
 gtk.main()
+# try: 
+# 	gtk.main() 
+# except KeyboardInterrupt: 
+# 	gtk.main_quit()
 gtk.threads_leave()
 
