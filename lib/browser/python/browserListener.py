@@ -95,7 +95,7 @@ class Tab(threading.Thread):
 
 
 # BROWSER - interface for node
-class Browser(object ):
+class Browser(object):
 	keyboard = False
 
 	def newTab(self, url):
@@ -129,10 +129,10 @@ class Browser(object ):
 
 	def toggleKeyboard(self):
 		if (not self.keyboard):
-			os.system("sh ./lib/browser/sh/onboard_show.sh")
+			os.system("./lib/browser/sh/onboard_show.sh")
 			self.keyboard = True
 		else:
-			os.system("sh ./lib/browser/sh/onboard_hide.sh")
+			os.system("./lib/browser/sh/onboard_hide.sh")
 			self.keyboard = False
 		return "PY BROWSER: toggleKeyboard done"
 
@@ -152,7 +152,6 @@ class BrowserCom(threading.Thread):
 		threading.Thread.__init__(self)
 	
 	def run(self):
-		os.system("sh ./lib/browser/sh/onboard_init.sh")
 		s = zerorpc.Server(Browser())
 		s.bind("tcp://0.0.0.0:4242")
 		s.run()
@@ -193,7 +192,7 @@ def initWindows():
 
 # Initiate starting windows
 initWindows()
-print "init browser com"
+os.system("./lib/browser/sh/onboard_init.sh")
 
 # Browser to node communication thread
 b = BrowserCom()
