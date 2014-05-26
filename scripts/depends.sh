@@ -15,6 +15,9 @@ sudo apt-get install libevent
 sudo apt-get install python-setuptools
 sudo apt-get install python-pip
 sudo apt-get install python-dev
+sudo apt-get install python-serial
+sudo apt-get install onboard
+#sudo apt-get install python-gobject
 sudo apt-get install libevent-dev
 sudo pip install pyzmq
 

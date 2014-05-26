@@ -95,18 +95,19 @@ class Tab(threading.Thread):
 
 
 # BROWSER - interface for node
-class Browser(object):
+class Browser(object ):
+	keyboard = False
 
 	def newTab(self, url):
 		global tabs, currentTab
 		if (url == None):
 			url = "http://google.com"
-
 		gtk.threads_enter()
 		tab = Tab(str(len(tabs)), url, True, True)
-		gtk.threads_leave()
 		tabs.append(tab)
 		currentTab = len(tabs) - 1
+		tabs[currentTab].web.grab_focus()
+		gtk.threads_leave()
 		return "PY BROWSER: New Tab done"
 
 	def switchTab(self, d):
@@ -122,8 +123,18 @@ class Browser(object):
 		currentTab = currentTab + int(d)
 		gtk.threads_enter()
 		tabs[currentTab].win.present()
+		tabs[currentTab].web.grab_focus()
 		gtk.threads_leave()
 		return "PY BROWSER: Change Tab done"
+
+	def toggleKeyboard(self):
+		if (not self.keyboard):
+			os.system("sh ./lib/browser/sh/onboard_show.sh")
+			self.keyboard = True
+		else:
+			os.system("sh ./lib/browser/sh/onboard_hide.sh")
+			self.keyboard = False
+		return "PY BROWSER: toggleKeyboard done"
 
 	def go(self, url):
 		global tabs, currentTab
@@ -141,6 +152,7 @@ class BrowserCom(threading.Thread):
 		threading.Thread.__init__(self)
 	
 	def run(self):
+		os.system("sh ./lib/browser/sh/onboard_init.sh")
 		s = zerorpc.Server(Browser())
 		s.bind("tcp://0.0.0.0:4242")
 		s.run()
@@ -158,7 +170,7 @@ gtk.gdk.threads_init()
 def initWindows():
 	global tabs, currentTab
 	# Browser tab
-	tab = Tab("0", "http://google.com", True, True)
+	tab = Tab("0", "http://127.0.0.1:3000/", True, True)
 	tabs.append(tab)
 
 	# UI Window

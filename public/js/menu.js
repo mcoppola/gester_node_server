@@ -83,10 +83,7 @@ $( document ).ready(function() {
         dataType: "json",
         data: {
             newTab: true,
-            url: "http://google.com"
-        },
-        success: function(res) {
-          console.log(res);
+            url: "http://nytimes.com"
         }
     });
   });
@@ -98,10 +95,7 @@ $( document ).ready(function() {
         dataType: "json",
         data: {
             go: true,
-            url: "http://yahoo.com"
-        },
-        success: function(res) {
-          console.log(res);
+            url: "http://google.com"
         }
     });
   });
@@ -114,9 +108,6 @@ $( document ).ready(function() {
         data: {
             switchTab: true,
             delta: -1
-        },
-        success: function(res) {
-          console.log(res);
         }
     });
   });
@@ -129,9 +120,6 @@ $( document ).ready(function() {
         data: {
             switchTab: true,
             delta: 1
-        },
-        success: function(res) {
-          console.log(res);
         }
     });
   });
@@ -143,9 +131,6 @@ $( document ).ready(function() {
         dataType: "json",
         data: {
             home: true
-        },
-        success: function(res) {
-          console.log(res);
         }
     });
   });
