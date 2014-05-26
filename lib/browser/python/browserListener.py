@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-import webkit, gtk, glib, gobject, threading, os, zerorpc
+import webkit, gtk, glib, gobject, threading, os, sys, zerorpc
 
 #gobject.threads_init()
 
@@ -115,10 +115,10 @@ class Browser(object):
 			if (d < 0):
 				currentTab = len(tabs) - 1
 				d = 0
-		if (currentTab >= (len(tabs))):
+		elif (currentTab >= (len(tabs) - 1)):
 			if (d > 0):
-				d = 0
 				currentTab = 0
+				d = 0
 		currentTab = currentTab + int(d)
 		gtk.threads_enter()
 		tabs[currentTab].win.present()
