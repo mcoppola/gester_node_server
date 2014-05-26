@@ -19,14 +19,17 @@ class Tab(threading.Thread):
 	def delete_event(self, widget, event, data=None):
 		return False
 
-	def __init__(self, title, url, makeToolbar=False):
+	def __init__(self, title, url, makeToolbar=False, fullscreen=False):
 		threading.Thread.__init__(self)
 		self.win = gtk.Window(gtk.WINDOW_TOPLEVEL)
 		self.win.set_resizable(True)
 		self.win.connect("delete_event", self.delete_event)
 		self.win.connect('destroy', lambda w: gtk.main_quit())
 		self.win.set_title(title)
-		#self.win.fullscreen()
+		
+		if (fullscreen):
+			self.win.maximize()
+			#self.win.fullscreen()
 
 		self.web = webkit.WebView()
 		self.web.load_uri(url)
@@ -100,7 +103,7 @@ class Browser(object):
 			url = "http://google.com"
 
 		gtk.threads_enter()
-		tab = Tab(str(len(tabs)), url, True)
+		tab = Tab(str(len(tabs)), url, True, True)
 		gtk.threads_leave()
 		tabs.append(tab)
 		currentTab = len(tabs) - 1
@@ -110,10 +113,12 @@ class Browser(object):
 		global tabs, currentTab
 		if (currentTab < 1):
 			if (d < 0):
-				return "PY BROWSER: Can't go back tab"
+				currentTab = len(tabs) - 1
+				d = 0
 		if (currentTab >= (len(tabs))):
 			if (d > 0):
-				return "PY BROWSER: Can't go forward tab"
+				d = 0
+				currentTab = 0
 		currentTab = currentTab + int(d)
 		gtk.threads_enter()
 		tabs[currentTab].win.present()
@@ -153,28 +158,30 @@ gtk.gdk.threads_init()
 def initWindows():
 	global tabs, currentTab
 	# Browser tab
-	tab = Tab("0", "http://google.com", True)
+	tab = Tab("0", "http://google.com", True, True)
 	tabs.append(tab)
 
 	# UI Window
 	ui = Tab("ui", 'http://127.0.0.1:3000/menu')
 	ui.win.set_name('ui-win')
-	style_provider = gtk.CssProvider()
+	ui.win.set_keep_above(True)
+	# style_provider = gtk.CssProvider()
 
-	css = open('./public/css/uiWindow.css', 'rb')
-	css_data = css.read()
-	css.close()
+	# css = open('./public/css/uiWindow.css', 'rb')
+	# css_data = css.read()
+	# css.close()
 
-	style_provider.load_from_data(css_data)
+	# style_provider.load_from_data(css_data)
 
-	Gtk.StyleContext.add_provider_for_screen(
-	    Gdk.Screen.get_default(), style_provider,     
-	    Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
-	)
+	# Gtk.StyleContext.add_provider_for_screen(
+	#     Gdk.Screen.get_default(), style_provider,     
+	#     Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
+	# )
 
 
 # Initiate starting windows
 initWindows()
+print "init browser com"
 
 # Browser to node communication thread
 b = BrowserCom()
