@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 import webkit, gtk, glib, threading, Queue, os, sys, zerorpc
-
 #gobject.threads_init()
 
 class WebView(webkit.WebView):
@@ -32,13 +31,31 @@ class Tab(threading.Thread):
 			#self.win.fullscreen()
 
 		self.web = webkit.WebView()
-		self.web.load_uri(url)
+		
 
 		if (makeToolbar):
 			self.addToolbar()
+			self.web.load_uri(url)
 		else:
+			self.makeUI()
+			self.web.load_uri(url)
 			self.win.add(self.web)
+
 		self.win.show_all()
+
+	def makeUI(self):
+		global w, h
+		self.win.set_decorated(False)
+		self.win.set_default_size(200, 350)
+		self.win.move(w - 200, h - 350)
+		self.win.set_opacity(0.8)
+		self.screen = self.win.get_screen()
+		colormap = self.screen.get_rgba_colormap()
+		if (colormap is not None and self.screen.is_composited()):
+			self.win.set_colormap(colormap)
+
+		self.web.set_transparent(True)
+
 
 	def addToolbar(self):
 		self.toolbar = gtk.Toolbar()
@@ -179,6 +196,8 @@ gtk.gdk.threads_init()
 
 tabs = []
 currentTab = 0
+w = 0
+h = 0
 callbackQueue = Queue.Queue()
 
 def loadQueue(function):
@@ -193,10 +212,14 @@ def readQueue():
 		callback()
 
 def initWindows():
-	global tabs, currentTab
+	global tabs, currentTab, w, h
 	# Browser tab
 	tab = Tab("0", "http://127.0.0.1:3000/", True, True)
 	tabs.append(tab)
+
+	# Grab window dimentions
+	w = tab.win.get_screen().get_width()
+	h = tab.win.get_screen().get_height()
 
 	# UI Window
 	ui = Tab("ui", 'http://127.0.0.1:3000/menu')
