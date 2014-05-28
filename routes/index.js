@@ -51,6 +51,14 @@ exports.api = function(req, res){
   if (req.query.home) {
     browser.go("http://127.0.0.1:3000/")
   }
+  if (req.query.scroll) {
+    if(req.query.delta) {
+      browser.scroll(req.query.delta);
+    } else {
+      browser.scroll();
+    }
+    
+  }
   res.json({done: true});
 
 }

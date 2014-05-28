@@ -2,7 +2,7 @@
 import webkit, gtk, glib, threading, Queue, os, sys, zerorpc
 #gobject.threads_init()
 
-class WebView(webkit.WebView):
+class UIWebView(webkit.WebView):
 	def get_html(self):
 		self.execute_script('oldtitle="document.title;document.title=document.documentElement.innterHTML;')
 		html = self.get_main_frame().get_title()
@@ -30,13 +30,14 @@ class Tab(threading.Thread):
 			self.win.maximize()
 			#self.win.fullscreen()
 
-		self.web = webkit.WebView()
-		
-
+		# browsing window
 		if (makeToolbar):
+			self.web = webkit.WebView()
+			#view.connect('scrollView', scrollView)
 			self.addToolbar()
 			self.web.load_uri(url)
-		else:
+		else: # ui window
+			self.web = UIWebView()
 			self.makeUI()
 			self.web.load_uri(url)
 			self.win.add(self.web)
@@ -46,7 +47,7 @@ class Tab(threading.Thread):
 	def makeUI(self):
 		global w, h
 		self.win.set_decorated(False)
-		self.win.set_default_size(200, 350)
+		self.win.set_default_size(200, 300)
 		self.win.move(w - 200, h - 350)
 		self.win.set_opacity(0.8)
 		self.screen = self.win.get_screen()
@@ -87,6 +88,17 @@ class Tab(threading.Thread):
 		self.win.add(self.vbox)
 		self.win.set_default_size(1060, 800)
 
+	# def scrollView(self):
+	# 	#parent is the gtk.ScrolledWindow that needs updating
+	# 	parent = self.get_parent()
+	# 	adj = parent.get_vadjustment()
+	# 	print adj
+	# 	print adj.value
+	# 	print adj.upper
+	# 	sys.stdout.flush()
+	# 	adj.value = adj.upper - adj.page_size
+	# 	parent.set_vadjustment(adj)
+
 	def on_active(self, widge, data=None):
 		url = self.url_bar.get_text()
 		try:
@@ -117,30 +129,32 @@ class Browser(object):
 
 	def newTab(self, url):
 		global tabs, currentTab
-		if (url == None):
-			url = "http://google.com"
-		gtk.threads_enter()
-		try:
-			tab = Tab(str(len(tabs)), url, True, True)
-		except (KeyboardInterrupt, SystemExit):
-			cleanup_stop_thread();
-			sys.exit()
-		#tab = Tab(str(len(tabs)), url, True, True)
-		tabs.append(tab)
-		currentTab = len(tabs) - 1
-		tabs[currentTab].web.grab_focus()
-		gtk.threads_leave()
+		# if (url == None):
+		# 	url = "http://google.com"
+		# gtk.threads_enter()
+		# # try:
+		# # 	tab = Tab(str(len(tabs)), url, True, True)
+		# # except (KeyboardInterrupt, SystemExit):
+		# # 	cleanup_stop_thread();
+		# # 	sys.exit()
+		# tab = Tab(str(len(tabs)), url, True, True)
+		# tabs.append(tab)
+		# currentTab = len(tabs) - 1
+		# tabs[currentTab].win.present()
+		# tabs[currentTab].web.grab_focus()
+		# gtk.threads_leave()
+		self.switchTab(1)
 		return "PY BROWSER: New Tab done"
 
 	def switchTab(self, d):
 		global tabs, currentTab
-		if (currentTab < 1):
-			if (d < 0):
-				currentTab = len(tabs) - 1
-				d = 0
-		elif (currentTab >= (len(tabs) - 1)):
-			if (d > 0):
+		if (int(d) > 0):
+			if (currentTab == (len(tabs) - 1)):
 				currentTab = 0
+				d = 0
+		elif (int(d) < 0):
+			if (currentTab == 0):
+				currentTab = (len(tabs) - 1)
 				d = 0
 		currentTab = currentTab + int(d)
 		gtk.threads_enter()
@@ -157,6 +171,26 @@ class Browser(object):
 			os.system("./lib/browser/sh/onboard_hide.sh")
 			self.keyboard = False
 		return "PY BROWSER: toggleKeyboard done"
+
+	def scroll(self, d=-1):
+		global tabs, currentTab
+		tabs[currentTab].web.scrollView()
+		#tabs[currentTab].web.execute_script('window.scrollTo(0,500);')
+		return "PY BROSWER: scroll done"
+
+	def goBack(self):
+		global tabs, currentTab
+		#gtk.threads_enter()
+		tabs[currentTab].web.go_back()
+		#gtk.threads_leave()
+		return "PY BROSWER: go back done"
+
+	def goForward(self):
+		global tabs, currentTab
+		#gtk.threads_enter()
+		tabs[currentTab].web.go_forward()
+		#gtk.threads_leave()
+		return "PY BROSWER: go back done"
 
 	def go(self, url):
 		global tabs, currentTab
@@ -225,19 +259,16 @@ def initWindows():
 	ui = Tab("ui", 'http://127.0.0.1:3000/menu')
 	ui.win.set_name('ui-win')
 	ui.win.set_keep_above(True)
-	# style_provider = gtk.CssProvider()
 
-	# css = open('./public/css/uiWindow.css', 'rb')
-	# css_data = css.read()
-	# css.close()
 
-	# style_provider.load_from_data(css_data)
+	# Make 2 other tabs on init
+	tabB = Tab("1", "http://127.0.0.1:3000/", True, True)
+	tabs.append(tabB)
+	tabC = Tab("2", "http://127.0.0.1:3000/", True, True)
+	tabs.append(tabC)
 
-	# Gtk.StyleContext.add_provider_for_screen(
-	#     Gdk.Screen.get_default(), style_provider,     
-	#     Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
-	# )
-
+	# set 0 to top
+	tab.win.present()
 
 # Initiate starting windows
 initWindows()

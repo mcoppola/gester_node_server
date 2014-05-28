@@ -1,22 +1,22 @@
 #!/usr/bin/env python
 
-import webkit, gtk, os
+import webkit, Gtk, os
 
-transparent_window_style_provider = gtk.CssProvider()
+transparent_window_style_provider = Gtk.CssProvider()
 
 def load_finished(web):
     js = 'alert("a");'
     b.execute_script(js)
 
-winA = gtk.Window()
+winA = Gtk.Window()
 winA.fullscreen()
-winA.connect('destroy', lambda w: gtk.main_quit())
+winA.connect('destroy', lambda w: Gtk.main_quit())
 
-winB = gtk.Window()
+winB = Gtk.Window()
 winB.fullscreen()
 winB.set_keep_above(1)
 winB.set_opacity(0.33)
-winB.connect('destroy', lambda w: gtk.main_quit())
+winB.connect('destroy', lambda w: Gtk.main_quit())
 
 
 webA = webkit.WebView()
@@ -32,4 +32,4 @@ winA.show_all()
 
 winB.add(webB)
 winB.show_all()
-gtk.main()
+Gtk.main()

@@ -83,7 +83,7 @@ $( document ).ready(function() {
         dataType: "json",
         data: {
             newTab: true,
-            url: "http://nytimes.com"
+            url: "http://www.drexel.edu/"
         }
     });
   });
@@ -131,6 +131,17 @@ $( document ).ready(function() {
         dataType: "json",
         data: {
             home: true
+        }
+    });
+  });
+  // Settings Listener
+  $('#button-settings').click(function() {
+    $.ajax({
+        url: "/api",
+        dataType: "json",
+        data: {
+            scroll: true,
+            delta: -1
         }
     });
   });
