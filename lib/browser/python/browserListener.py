@@ -128,7 +128,7 @@ class Browser(object):
 	keyboard = False
 
 	def newTab(self, url):
-		global tabs, currentTab
+		global tabs, currentTab, seeTabs
 		# if (url == None):
 		# 	url = "http://google.com"
 		# gtk.threads_enter()
@@ -143,18 +143,19 @@ class Browser(object):
 		# tabs[currentTab].win.present()
 		# tabs[currentTab].web.grab_focus()
 		# gtk.threads_leave()
+		seeTabs += 1
 		self.switchTab(1) # For now we're gonna start with 3
 		return "PY BROWSER: New Tab done"
 
 	def switchTab(self, d):
-		global tabs, currentTab
+		global tabs, currentTab, seeTabs
 		if (int(d) > 0):
-			if (currentTab == (len(tabs) - 1)):
+			if (currentTab == (seeTabs)):
 				currentTab = 0
 				d = 0
 		elif (int(d) < 0):
 			if (currentTab == 0):
-				currentTab = (len(tabs) - 1)
+				currentTab = (seeTabs)
 				d = 0
 		currentTab = currentTab + int(d)
 		gtk.threads_enter()
@@ -230,7 +231,7 @@ gtk.gdk.threads_init()
 
 tabs = []
 currentTab = 0
-seeTabs = 1
+seeTabs = 0
 w = 0
 h = 0
 callbackQueue = Queue.Queue()
