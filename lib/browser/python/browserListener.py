@@ -151,7 +151,7 @@ class Browser(object):
 		if (int(d) > 0):
 			if (currentTab == (len(tabs) - 1)):
 				currentTab = 0
-				d = 0net
+				d = 0
 		elif (int(d) < 0):
 			if (currentTab == 0):
 				currentTab = (len(tabs) - 1)
@@ -230,6 +230,7 @@ gtk.gdk.threads_init()
 
 tabs = []
 currentTab = 0
+seeTabs = 1
 w = 0
 h = 0
 callbackQueue = Queue.Queue()
