@@ -13,13 +13,13 @@ class UIWebView(webkit.WebView):
 		js = 'alart("a");'
 		b.execute_script(js)
 
-class Tab(threading.Thread):
+class Tab(object):
 
 	def delete_event(self, widget, event, data=None):
 		return False
 
 	def __init__(self, title, url, makeToolbar=False, fullscreen=False):
-		threading.Thread.__init__(self)
+		#threading.Thread.__init__(self)
 		self.win = gtk.Window(gtk.WINDOW_TOPLEVEL)
 		self.win.set_resizable(True)
 		self.win.connect("delete_event", self.delete_event)
@@ -47,8 +47,8 @@ class Tab(threading.Thread):
 	def makeUI(self):
 		global w, h
 		self.win.set_decorated(False)
-		self.win.set_default_size(200, 300)
-		self.win.move(w - 200, h - 350)
+		self.win.set_default_size(200, 280)
+		self.win.move(w - 200, h - 280)
 		self.win.set_opacity(0.8)
 		self.screen = self.win.get_screen()
 		colormap = self.screen.get_rgba_colormap()
@@ -145,6 +145,7 @@ class Browser(object):
 		# gtk.threads_leave()
 		seeTabs += 1
 		self.switchTab(1) # For now we're gonna start with 3
+
 		return "PY BROWSER: New Tab done"
 
 	def switchTab(self, d):
@@ -158,10 +159,8 @@ class Browser(object):
 				currentTab = (seeTabs)
 				d = 0
 		currentTab = currentTab + int(d)
-		gtk.threads_enter()
-		tabs[currentTab].win.present()
-		tabs[currentTab].web.grab_focus()
-		gtk.threads_leave()
+		loadQueue(tabs[currentTab].win.present())
+		loadQueue(tabs[currentTab].web.grab_focus())
 		return "PY BROWSER: Change Tab done"
 
 	def toggleKeyboard(self):
@@ -173,23 +172,23 @@ class Browser(object):
 			self.keyboard = False
 		return "PY BROWSER: toggleKeyboard done"
 
-	def scroll(self, d=-1):
-		global tabs, currentTab
-		tabs[currentTab].web.scrollView()
-		#tabs[currentTab].web.execute_script('window.scrollTo(0,500);')
-		return "PY BROSWER: scroll done"
+	# def scroll(self, d=-1):
+	# 	global tabs, currentTab
+	# 	tabs[currentTab].web.scrollView()
+	# 	#tabs[currentTab].web.execute_script('window.scrollTo(0,500);')
+	# 	return "PY BROSWER: scroll done"
 
 	def goBack(self):
 		global tabs, currentTab
 		#gtk.threads_enter()
-		tabs[currentTab].web.go_back()
+		loadQueue(tabs[currentTab].web.go_back())
 		#gtk.threads_leave()
 		return "PY BROSWER: go back done"
 
 	def goForward(self):
 		global tabs, currentTab
 		#gtk.threads_enter()
-		tabs[currentTab].web.go_forward()
+		loadQueue(tabs[currentTab].web.go_forward())
 		#gtk.threads_leave()
 		return "PY BROSWER: go back done"
 
@@ -197,15 +196,11 @@ class Browser(object):
 		global tabs, currentTab
 		if (url == None):
 			url = "http://espn.go.com"
-		gtk.threads_enter()
-		tabs[currentTab].web.load_uri(url)
-		gtk.threads_leave()
+		loadQueue(tabs[currentTab].web.load_uri(url))
 		return "PY BROWSER: Go done"
 
 	def quit(self):
 		global tabs
-		# for tab in tabs:
-		# 	loadQueue(lambda: tab.win.destroy())
 		loadQueue(lambda: gtk.main_quit())
 		loadQueue(lambda: gsys.exit())
 		return "PY BROWSER: quit done"
@@ -227,7 +222,7 @@ class BrowserCom(threading.Thread):
 ########################################
 
 #glib.thread_init()
-gtk.gdk.threads_init()
+#gtk.gdk.threads_init()
 
 tabs = []
 currentTab = 0
@@ -281,11 +276,11 @@ b = BrowserCom()
 b.start()
 
 # Gtk thread
-gtk.threads_enter()
+#gtk.threads_enter()
 gtk.main()
 # try: 
 # 	gtk.main() 
 # except KeyboardInterrupt: 
 # 	gtk.main_quit()
-gtk.threads_leave()
+#gtk.threads_leave()
 
