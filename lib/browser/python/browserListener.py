@@ -143,7 +143,7 @@ class Browser(object):
 		# tabs[currentTab].win.present()
 		# tabs[currentTab].web.grab_focus()
 		# gtk.threads_leave()
-		self.switchTab(1)
+		self.switchTab(1) # For now we're gonna start with 3
 		return "PY BROWSER: New Tab done"
 
 	def switchTab(self, d):
@@ -151,7 +151,7 @@ class Browser(object):
 		if (int(d) > 0):
 			if (currentTab == (len(tabs) - 1)):
 				currentTab = 0
-				d = 0
+				d = 0net
 		elif (int(d) < 0):
 			if (currentTab == 0):
 				currentTab = (len(tabs) - 1)
