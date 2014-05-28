@@ -47,8 +47,8 @@ class Tab(object):
 	def makeUI(self):
 		global w, h
 		self.win.set_decorated(False)
-		self.win.set_default_size(200, 280)
-		self.win.move(w - 200, h - 280)
+		self.win.set_default_size(190, 300)
+		self.win.move(w - 210, h - 300)
 		self.win.set_opacity(0.8)
 		self.screen = self.win.get_screen()
 		colormap = self.screen.get_rgba_colormap()
@@ -81,7 +81,7 @@ class Tab(object):
 		self.scroll_window.add(self.web)
 
 		self.vbox = gtk.VBox(False, 0)
-		self.vbox.pack_start(self.toolbar, False, True, 0)
+		#self.vbox.pack_start(self.toolbar, False, True, 0)
 		self.vbox.pack_start(self.url_bar, False, True, 0)
 		self.vbox.add(self.scroll_window)
 
@@ -195,7 +195,7 @@ class Browser(object):
 	def go(self, url):
 		global tabs, currentTab
 		if (url == None):
-			url = "http://espn.go.com"
+			url = "http://google.com"
 		loadQueue(tabs[currentTab].web.load_uri(url))
 		return "PY BROWSER: Go done"
 
@@ -214,7 +214,12 @@ class BrowserCom(threading.Thread):
 	def run(self):
 		s = zerorpc.Server(Browser())
 		s.bind("tcp://0.0.0.0:4242")
-		s.run()
+		try:
+			s.run()
+		except:
+			print "Restarting zerorpc"
+			sys.stdout.flush()
+			self.run()
 
 
 ########################################
