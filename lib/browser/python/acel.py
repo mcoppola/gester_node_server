@@ -7,9 +7,13 @@ while 1:
 	sensorValue = arduino.readline()
 	if (("yUp" in sensorValue) || ("yDn" in sensorValue)):
 		if (not keyboard):
+			print "keyboard open"
+			sys.stdout.flush()
 			arduino.write("1")
 			keyboard = True
-		else 
+		else:
+			print "keyboard close"
+			sys.stdout.flush()
 			arduino.write("0")
 			keyboard = False
 	print sensorValue
