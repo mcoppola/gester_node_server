@@ -164,7 +164,7 @@ class Browser(object):
 		global vMouse
 		d = int(d)
 		x, y = vMouse.position()
-		if d < 0:
+		if d > 0:
 			vMouse.click(x, y, 4)
 			vMouse.press(x, y, 4)
 			vMouse.release(x, y, 4)
