@@ -20,7 +20,10 @@ class Tab(object):
 
 	def __init__(self, title, url, makeToolbar=False, fullscreen=False):
 		#threading.Thread.__init__(self)
-		self.win = gtk.Window(gtk.WINDOW_TOPLEVEL)
+		if (makeToolbar):
+			self.win = gtk.Window(gtk.WINDOW_TOPLEVEL)
+		else:
+			self.win = gtk.Window()
 		self.win.set_resizable(True)
 		self.win.connect("delete_event", self.delete_event)
 		#self.win.connect('destroy', lambda w: gtk.main_quit())
