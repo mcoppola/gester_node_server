@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 import webkit, gtk, glib, threading, Queue, os, sys, zerorpc
-#gobject.threads_init()
+from pymouse import PyMouse
 
 class UIWebView(webkit.WebView):
 	def get_html(self):
@@ -33,7 +33,6 @@ class Tab(object):
 		# browsing window
 		if (makeToolbar):
 			self.web = webkit.WebView()
-			#view.connect('scrollView', scrollView)
 			self.addToolbar()
 			self.web.load_uri(url)
 		else: # ui window
@@ -88,17 +87,6 @@ class Tab(object):
 		self.win.add(self.vbox)
 		self.win.set_default_size(1060, 800)
 
-	# def scrollView(self):
-	# 	#parent is the gtk.ScrolledWindow that needs updating
-	# 	parent = self.get_parent()
-	# 	adj = parent.get_vadjustment()
-	# 	print adj
-	# 	print adj.value
-	# 	print adj.upper
-	# 	sys.stdout.flush()
-	# 	adj.value = adj.upper - adj.page_size
-	# 	parent.set_vadjustment(adj)
-
 	def on_active(self, widge, data=None):
 		url = self.url_bar.get_text()
 		try:
@@ -144,7 +132,10 @@ class Browser(object):
 		# tabs[currentTab].web.grab_focus()
 		# gtk.threads_leave()
 		seeTabs += 1
-		self.switchTab(1) # For now we're gonna start with 3
+		if (seeTabs > 0):
+			self.switchTab(2) # For now we're gonna start with 3
+		else:
+			self.switchTab(1)
 
 		return "PY BROWSER: New Tab done"
 
@@ -172,11 +163,19 @@ class Browser(object):
 			self.keyboard = False
 		return "PY BROWSER: toggleKeyboard done"
 
-	# def scroll(self, d=-1):
-	# 	global tabs, currentTab
-	# 	tabs[currentTab].web.scrollView()
-	# 	#tabs[currentTab].web.execute_script('window.scrollTo(0,500);')
-	# 	return "PY BROSWER: scroll done"
+	def scroll(self, d=1):
+		global vMouse
+		d = int(d)
+		x, y = vMouse.position()
+		if d < 0:
+			vMouse.click(x, y, 4)
+			vMouse.press(x, y, 4)
+			vMouse.release(x, y, 4)
+		else:
+			vMouse.click(x, y, 5)
+			vMouse.press(x, y, 5)
+			vMouse.release(x, y, 5)
+		return "PY BROWSER: scroll done"
 
 	def goBack(self):
 		global tabs, currentTab
@@ -235,6 +234,7 @@ seeTabs = 0
 w = 0
 h = 0
 callbackQueue = Queue.Queue()
+vMouse = PyMouse()
 
 def loadQueue(function):
 	callbackQueue.put(function)
@@ -262,7 +262,6 @@ def initWindows():
 	ui.win.set_name('ui-win')
 	ui.win.set_keep_above(True)
 
-
 	# Make 2 other tabs on init
 	tabB = Tab("1", "http://127.0.0.1:3000/", True, True)
 	tabs.append(tabB)
@@ -281,11 +280,5 @@ b = BrowserCom()
 b.start()
 
 # Gtk thread
-#gtk.threads_enter()
 gtk.main()
-# try: 
-# 	gtk.main() 
-# except KeyboardInterrupt: 
-# 	gtk.main_quit()
-#gtk.threads_leave()
 
