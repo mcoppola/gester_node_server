@@ -59,6 +59,9 @@ exports.api = function(req, res){
     }
     
   }
+  if (req.query.keyboard) {
+    browser.toggleKeyboard();
+  }
   res.json({done: true});
 
 }

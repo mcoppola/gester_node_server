@@ -140,8 +140,7 @@ $( document ).ready(function() {
         url: "/api",
         dataType: "json",
         data: {
-            scroll: true,
-            delta: -1
+            keyboard: true
         }
     });
   });
