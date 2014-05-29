@@ -27,8 +27,8 @@ class Tab(object):
 		self.win.set_title(title)
 		
 		if (fullscreen):
-			#self.win.maximize()
-			self.win.fullscreen()
+			self.win.maximize()
+			#self.win.fullscreen()
 
 		# browsing window
 		if (makeToolbar):
