@@ -27,8 +27,8 @@ class Tab(object):
 		self.win.set_title(title)
 		
 		if (fullscreen):
-			self.win.maximize()
-			#self.win.fullscreen()
+			#self.win.maximize()
+			self.win.fullscreen()
 
 		# browsing window
 		if (makeToolbar):
@@ -132,10 +132,7 @@ class Browser(object):
 		# tabs[currentTab].web.grab_focus()
 		# gtk.threads_leave()
 		seeTabs += 1
-		if (seeTabs > 0):
-			self.switchTab(2) # For now we're gonna start with 3
-		else:
-			self.switchTab(1)
+		self.switchTab(1)
 
 		return "PY BROWSER: New Tab done"
 
